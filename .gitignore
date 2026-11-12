@@ -26,6 +26,3 @@ Thumbs.db
 
 # Vercel Build Output
 .vercel/
-
-# Staticfiles collected (bisa di-generate otomatis oleh Vercel via build_files.sh)
-staticfiles/
