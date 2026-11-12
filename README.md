@@ -1,68 +1,38 @@
-# 🍜 KANTIN 14 FAKULTAS UNIVERSITAS INDONESIA (KANTIN UI)
+# KANTIN 14 FAKULTAS UNIVERSITAS INDONESIA (KANTIN UI)
 
 > **Proyek Mata Kuliah:** Dasar-Dasar Pemrograman 1 (DDP1)  
-> **Tim Pengembang:** Claudeholic (Ghalindra & Team) — Program Studi Sistem Informasi  
+> **Tim Pengembang:** Claudeholic (Lead: Ghalindra) — Program Studi Sistem Informasi  
 > **Fakultas:** Fakultas Ilmu Komputer, Universitas Indonesia (Fasilkom UI)  
-> **Slogan Randomizer:** *"Makan apa hari ini?"*
+> **Slogan Randomizer:** *"Makan apa hari ini?"*  
+> **Desain & Tema:** Palette Warna Biru & Merah, Lucide Icons (Bebas Emoji)
 
 ---
 
-## 📌 1. Gambaran Umum Proyek
+## 1. Gambaran Umum Proyek
 
-**Kantin UI** adalah portal direktori dan platform pencarian kuliner komprehensif yang mencakup seluruh **14 Fakultas di Universitas Indonesia (UI)**. Website ini menghubungkan mahasiswa dan sivitas akademika dengan kantin-kantin legendaris kampus seperti:
-- **Kantin Dallas (FMIPA)** — *"Di Bawah Lindungan Allah SWT"*
-- **Kantin Balsem & Takor (FISIP)** — *"Balik Semak & Taman Korea"*
-- **Kantin Kansas (FIB)** — *"Kantin Sastra & Piano Terbuka"*
-- **Kantin Fasilkom (Gedung B)**
-- **Kantin Biru Teknik (FT)**
-- **Kantin Baris (FH)**, **Kantin FEB**, **Kantin FPsi**, **Kantin FIA**
-- **Kantin Rumpun Ilmu Kesehatan (FK, FKG, FKM, FIK, FF)**
+**Kantin UI** adalah portal direktori dan platform rekomendasi kuliner interaktif untuk **14 Fakultas di Universitas Indonesia (UI)**. Dilengkapi denah interaktif kampus, sistem filter pencarian menu dan harga, serta fitur pintar **Food Randomizer** ("Makan apa hari ini?") yang dapat mengacak makanan, minuman, maupun paket kombo sekaligus.
 
 ---
 
-## 🏛️ 2. Daftar 14 Fakultas di Universitas Indonesia
+## 2. Struktur Database (Relasi Tiga Tingkat)
 
-Website ini mengelompokkan 14 Fakultas UI ke dalam 3 Rumpun Ilmu resmi:
-
-### A. Rumpun Sains dan Teknologi (Saintek)
-1. **Fasilkom:** Fakultas Ilmu Komputer (Kantin Fasilkom Gedung B)
-2. **FT:** Fakultas Teknik (Kantin Biru Teknik)
-3. **FMIPA:** Fakultas Matematika dan Ilmu Pengetahuan Alam (Kantin Dallas)
-
-### B. Rumpun Sosial dan Humaniora (Soshum)
-4. **FISIP:** Fakultas Ilmu Sosial dan Ilmu Politik (Kantin Balsem / Takor)
-5. **FIB:** Fakultas Ilmu Pengetahuan Budaya (Kantin Kansas)
-6. **FEB:** Fakultas Ekonomi dan Bisnis (Kantin FEB)
-7. **FH:** Fakultas Hukum (Kantin Baris)
-8. **FPsi:** Fakultas Psikologi (Kantin Psikologi)
-9. **FIA:** Fakultas Ilmu Administrasi (Kantin FIA)
-
-### C. Rumpun Ilmu Kesehatan (IKES)
-10. **FK:** Fakultas Kedokteran (Salemba & RIK Depok)
-11. **FKG:** Fakultas Kedokteran Gigi
-12. **FKM:** Fakultas Kesehatan Masyarakat
-13. **FIK:** Fakultas Ilmu Keperawatan
-14. **FF:** Fakultas Farmasi
-
----
-
-## 🗄️ 3. Struktur Database (Relasi Tiga Tingkat)
-
-Proyek ini menggunakan **Relasi Hierarkis 3 Tingkat**:
 ```text
-[ Faculty (14 Fakultas) ] ── (1 to N) ──► [ Booth (Stan Kantin) ] ── (1 to N) ──► [ Menu (Makanan/Minuman) ]
+[ Faculty (14 Fakultas) ] ── (1:N) ──> [ Booth (Stan Kantin) ] ── (1:N) ──> [ Menu (Makanan/Minuman) ]
 ```
 
 1. **Model `Faculty`:**
-   - `name`, `short_name`, `canteen_name`, `cluster` (Saintek/Soshum/IKES), `description`, `icon`.
+   - Menyimpan data 14 Fakultas UI dalam 3 Rumpun Ilmu (Saintek, Soshum, IKES).
+   - Field: `name`, `short_name`, `canteen_name`, `cluster`, `description`, `icon`.
 2. **Model `Booth`:**
-   - `faculty` (ForeignKey ke Faculty), `name`, `location`, `map_code`, `description`, `image`.
+   - Stan penjual di kantin fakultas UI.
+   - Field: `faculty` (ForeignKey), `name`, `location`, `map_code`, `description`, `image`.
 3. **Model `Menu`:**
-   - `booth` (ForeignKey ke Booth, CASCADE), `name`, `category` (makanan/minuman/snack), `price`, `description`, `is_available`.
+   - Daftar makanan, minuman, dan camilan.
+   - Field: `booth` (ForeignKey CASCADE), `name`, `category`, `price`, `description`, `is_available`.
 
 ---
 
-## 🚀 4. Cara Menjalankan Website
+## 3. Cara Menjalankan Secara Lokal (Local Development)
 
 Buka terminal di folder proyek di VS Code, lalu jalankan:
 
@@ -70,17 +40,57 @@ Buka terminal di folder proyek di VS Code, lalu jalankan:
 .\.venv\Scripts\python.exe manage.py runserver
 ```
 
-Lalu buka di browser:
-- 🌐 **Website Utama:** [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
-- ⚙️ **Panel Admin (CRUD):** [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/)
+Akses melalui browser:
+- **Website Utama:** [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+- **Panel Admin:** [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/)
   - **Username:** `Ghalindra`
   - **Password:** `123456789ABC`
 
----
-
-## 🧪 5. Menjalankan Unit Testing
-
+Menjalankan Unit Test otomatis:
 ```powershell
 .\.venv\Scripts\python.exe manage.py test
 ```
-*Hasil:* **14 tests passed (OK)** dalam 0.110 detik.
+
+---
+
+## 4. Panduan Import ke GitHub
+
+Proyek ini telah diinisialisasi Git lokal dan memiliki file `.gitignore` lengkap. Ikuti langkah berikut untuk mengunggah ke akun GitHub Anda:
+
+1. Buat repository baru di [GitHub](https://github.com/new) (misalnya beri nama `kantin-ui-ddp1`), biarkan kosong tanpa README/license.
+2. Buka terminal di folder proyek dan jalankan perintah:
+
+```powershell
+# Hubungkan dengan URL repository GitHub Anda
+git remote add origin https://github.com/USERNAME-ANDA/kantin-ui-ddp1.git
+
+# Pastikan branch bernama main
+git branch -M main
+
+# Unggah seluruh source code ke GitHub
+git push -u origin main
+```
+
+---
+
+## 5. Panduan Deploy ke Vercel
+
+Proyek ini telah dilengkapi file konfigurasi `vercel.json`, `build_files.sh`, dan `requirements.txt`:
+
+### Opsi A: Deploy Otomatis via GitHub (Paling Mudah)
+1. Buka dashboard [Vercel](https://vercel.com/) dan login menggunakan akun GitHub Anda.
+2. Klik tombol **"Add New..."** lalu pilih **"Project"**.
+3. Pilih repository `kantin-ui-ddp1` yang baru Anda push ke GitHub, lalu klik **"Import"**.
+4. Di bagian **Environment Variables** (opsional tapi disarankan):
+   - Tambahkan `DEBUG` = `False`
+   - Tambahkan `SECRET_KEY` = `isi-dengan-string-rahasia-bebas`
+5. Klik **"Deploy"**. Vercel akan otomatis menjalankan `build_files.sh`, menginstall dependensi, mengumpulkan aset statis (`collectstatic`), dan menerbitkan URL website Anda (`https://nama-proyek.vercel.app`).
+
+### Opsi B: Deploy via Vercel CLI
+```powershell
+# Install Vercel CLI (jika belum ada)
+npm i -g vercel
+
+# Login dan deploy
+vercel
+```
