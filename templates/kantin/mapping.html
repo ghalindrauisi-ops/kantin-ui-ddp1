@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Pemetaan Denah Kantin 14 Fakultas | Kantin UI{% endblock %}
+{% block content %}
+<section style="padding:2.5rem 0 4rem">
+  <div class="container">
+    <div class="page-header">
+      <a href="{% url 'kantin:home' %}" class="page-back"><i data-lucide="arrow-left"></i> Kembali ke Beranda</a>
+      <h1 class="page-title"><i data-lucide="map"></i> Pemetaan Denah Kantin 14 Fakultas UI</h1>
+      <p class="page-subtitle">Pilih fakultas untuk melihat denah tata letak stan secara interaktif.</p>
+    </div>
+    <div style="margin-bottom:2rem;overflow-x:auto;padding-bottom:.5rem">
+      <div style="display:flex;gap:.5rem;min-width:max-content">
+        {% for fac in faculties %}
+        <a href="{% url 'kantin:mapping' %}?faculty={{ fac.short_name }}" class="btn {% if current_faculty.id == fac.id %}btn-blue{% else %}btn-ghost{% endif %}" style="padding:.45rem .95rem;font-size:.82rem;border-radius:var(--r-full)">{{ fac.short_name }}</a>
+        {% endfor %}
+      </div>
+    </div>
+    {% if current_faculty %}
+    <div style="background:white;border:1px solid var(--border);border-radius:var(--r-md);padding:1.4rem;margin-bottom:2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem">
+      <div>
+        <h2 style="font-size:1.3rem;font-weight:800;color:var(--blue-dark);margin-bottom:.25rem">{{ current_faculty.canteen_name }}</h2>
+        <p style="font-size:.87rem;color:var(--text-muted);max-width:720px">{{ current_faculty.description }} &mdash; {{ current_faculty.location_desc }}</p>
+      </div>
+      <a href="{% url 'kantin:menu_list' %}?faculty={{ current_faculty.short_name }}" class="btn btn-outline-blue" style="font-size:.85rem">Lihat Semua Menu &rarr;</a>
+    </div>
+    {% endif %}
+    <div class="map-layout">
+      <div class="map-container">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.4rem;padding-bottom:.7rem;border-bottom:1px solid var(--border)">
+          <div><h3 style="font-weight:800;font-size:1.1rem;color:var(--blue-dark)">Denah: {{ current_faculty.canteen_name }}</h3><span style="font-size:.8rem;color:var(--text-muted)">{{ current_faculty.name }}</span></div>
+          <span class="badge badge-blue">Denah Interaktif</span>
+        </div>
+        <div class="floorplan-wrapper">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.4rem;padding:.45rem .9rem;background:var(--bg-muted);border-radius:var(--r-sm);font-size:.78rem;font-weight:700;color:var(--text-muted)">
+            <span>Pintu Masuk / Selasar {{ current_faculty.short_name }}</span>
+            <span>Jalur Pembelian &rarr;</span>
+          </div>
+          <div class="floorplan-grid">
+            {% for booth in booths %}
+            <div class="booth-node" data-id="{{ booth.id }}" data-name="{{ booth.name }}" data-location="{{ booth.location }}" data-description="{{ booth.description }}" data-total-menu="{{ booth.menus.count }}" data-detail-url="{% url 'kantin:booth_detail' booth.id %}">
+              <span class="node-code">{{ booth.map_code }}</span>
+              <div class="node-name" title="{{ booth.name }}">{{ booth.name }}</div>
+              <div class="node-menus"><i data-lucide="utensils"></i> {{ booth.menus.count }} Menu</div>
+            </div>
+            {% empty %}
+            <div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--text-muted)">Belum ada data booth. Tambahkan melalui panel admin.</div>
+            {% endfor %}
+          </div>
+          <div class="dining-hall"><i data-lucide="armchair"></i><div>AREA MAKAN MAHASISWA ({{ current_faculty.short_name }})</div></div>
+        </div>
+        <div style="margin-top:1.4rem;display:flex;align-items:center;gap:.7rem;font-size:.84rem;color:var(--text-muted);background:var(--bg-muted);padding:.7rem 1rem;border-radius:var(--r-sm)"><i data-lucide="info" style="width:15px;height:15px"></i><span>Klik kotak stan untuk melihat info lengkap di panel kanan.</span></div>
+      </div>
+      <div>
+        <div class="booth-info-panel" id="boothInfoPanel">
+          <div class="info-panel-empty"><i data-lucide="map-pin"></i><h4 style="font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:.45rem">Pilih Stan pada Denah</h4><p style="font-size:.84rem;line-height:1.5">Klik salah satu kotak stan di sebelah kiri.</p></div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:3rem">
+      <h3 style="font-size:1.35rem;font-weight:800;color:var(--text);margin-bottom:1.2rem">Daftar Stan di {{ current_faculty.canteen_name }}</h3>
+      <div class="booth-grid">
+        {% for booth in booths %}
+        <div class="booth-card">
+          <div class="booth-card-body">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.45rem"><span class="map-code">{{ booth.map_code }}</span><span style="font-size:.78rem;color:var(--text-muted);font-weight:600">{{ booth.location }}</span></div>
+            <h4 class="booth-card-title">{{ booth.name }}</h4>
+            <p class="booth-card-desc">{{ booth.description|truncatewords:15 }}</p>
+            <div class="booth-card-footer"><span style="font-size:.82rem;font-weight:750;color:var(--blue)">{{ booth.menus.count }} Menu</span><a href="{% url 'kantin:booth_detail' booth.id %}" class="btn btn-outline-blue" style="padding:.35rem .8rem;font-size:.78rem">Lihat Menu</a></div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

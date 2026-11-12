@@ -1,0 +1,105 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Kantin UI - 14 Fakultas Universitas Indonesia{% endblock %}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% block extra_head %}{% endblock %}
+</head>
+<body>
+<header class="navbar">
+  <div class="container navbar-inner">
+    <a href="{% url 'kantin:home' %}" class="brand-wrapper">
+      <div class="brand-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg></div>
+      <div>
+        <div class="brand-name">Kantin UI</div>
+        <div class="brand-sub">14 Fakultas Universitas Indonesia</div>
+      </div>
+    </a>
+    <nav class="desktop-nav">
+      <a href="{% url 'kantin:home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">Beranda</a>
+      <a href="{% url 'kantin:mapping' %}" class="nav-link {% if request.resolver_match.url_name == 'mapping' %}active{% endif %}">Pemetaan</a>
+      <a href="{% url 'kantin:randomizer' %}" class="nav-link {% if request.resolver_match.url_name == 'randomizer' %}active{% endif %}">Randomizer</a>
+      <a href="{% url 'kantin:menu_list' %}" class="nav-link {% if request.resolver_match.url_name == 'menu_list' %}active{% endif %}">Daftar Menu</a>
+      <a href="{% url 'kantin:about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About</a>
+      <a href="{% url 'kantin:contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Kontak</a>
+    </nav>
+    <button class="hamburger-btn" id="hamburgerBtn" aria-label="Menu">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+  </div>
+</header>
+<div class="sidebar-overlay" id="sidebarOverlay">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="brand-wrapper">
+        <div class="brand-logo" style="width:34px;height:34px"><i data-lucide="utensils" style="width:16px;height:16px"></i></div>
+        <div class="brand-name" style="font-size:1rem">Kantin UI</div>
+      </div>
+      <button class="close-btn" id="closeSidebarBtn"><i data-lucide="x"></i></button>
+    </div>
+    <ul class="sidebar-menu">
+      <li class="sidebar-item"><a href="{% url 'kantin:home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}"><i data-lucide="home"></i><span>Beranda</span></a></li>
+      <li class="sidebar-item"><a href="{% url 'kantin:about' %}" class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}"><i data-lucide="info"></i><span>About Us</span></a></li>
+      <li class="sidebar-item"><a href="{% url 'kantin:contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}"><i data-lucide="mail"></i><span>Kontak</span></a></li>
+      <hr class="sidebar-divider">
+      <div class="sidebar-label">Fitur</div>
+      <li class="sidebar-item"><a href="{% url 'kantin:mapping' %}"><i data-lucide="map"></i><span>Pemetaan Denah</span></a></li>
+      <li class="sidebar-item"><a href="{% url 'kantin:randomizer' %}"><i data-lucide="shuffle"></i><span>Makan Apa Hari Ini?</span></a></li>
+      <li class="sidebar-item"><a href="{% url 'kantin:menu_list' %}"><i data-lucide="book-open"></i><span>Daftar Menu</span></a></li>
+    </ul>
+    <div class="sidebar-footer"><strong>Kantin 14 Fakultas UI</strong><br><span>Proyek DDP1 &mdash; Sistem Informasi UI</span></div>
+  </aside>
+</div>
+{% if messages %}
+<div class="container" style="margin-top:1.5rem">
+  {% for message in messages %}
+  <div class="alert {% if message.tags == 'success' %}alert-success{% else %}alert-error{% endif %}"><i data-lucide="{% if message.tags == 'success' %}check-circle{% else %}alert-circle{% endif %}"></i>{{ message }}</div>
+  {% endfor %}
+</div>
+{% endif %}
+<main style="flex-grow:1">{% block content %}{% endblock %}</main>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div class="brand-wrapper" style="margin-bottom:.5rem">
+          <div class="brand-logo" style="width:36px;height:36px"><i data-lucide="utensils" style="width:17px;height:17px"></i></div>
+          <div class="brand-name">Kantin UI</div>
+        </div>
+        <p class="footer-desc">Direktori terlengkap kuliner kampus di 14 Fakultas Universitas Indonesia. Dikembangkan sebagai proyek DDP1 oleh Tim Claudeholic.</p>
+      </div>
+      <div>
+        <h4 class="footer-heading">Navigasi</h4>
+        <ul class="footer-links">
+          <li><a href="{% url 'kantin:home' %}"><i data-lucide="home"></i>Beranda</a></li>
+          <li><a href="{% url 'kantin:about' %}"><i data-lucide="info"></i>About Us</a></li>
+          <li><a href="{% url 'kantin:contact' %}"><i data-lucide="mail"></i>Kontak</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-heading">Rumpun Fakultas</h4>
+        <ul class="footer-links">
+          <li><a href="{% url 'kantin:menu_list' %}?cluster=Saintek"><i data-lucide="flask-conical"></i>Saintek</a></li>
+          <li><a href="{% url 'kantin:menu_list' %}?cluster=Soshum"><i data-lucide="landmark"></i>Soshum</a></li>
+          <li><a href="{% url 'kantin:menu_list' %}?cluster=IKES"><i data-lucide="heart-pulse"></i>IKES</a></li>
+          <li><a href="{% url 'kantin:randomizer' %}"><i data-lucide="shuffle"></i>Makan Apa Hari Ini?</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 <strong>Kantin UI</strong> &mdash; Tim Claudeholic (Ghalindra, Sistem Informasi Fasilkom UI)</div>
+  </div>
+</footer>
+<script src="{% static 'js/main.js' %}"></script>
+<script>lucide.createIcons();</script>
+{% block extra_scripts %}{% endblock %}
+</body>
+</html>

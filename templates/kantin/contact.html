@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Kontak Tim Claudeholic | Kantin UI{% endblock %}
+{% block content %}
+<section style="padding:2.5rem 0 4.5rem">
+  <div class="container">
+    <div style="text-align:center;max-width:640px;margin:0 auto 2.5rem">
+      <span class="badge badge-blue" style="margin-bottom:.6rem">Tim Pengembang Claudeholic</span>
+      <h1 style="font-size:2.25rem;font-weight:850;color:var(--text);margin-top:.5rem">Hubungi Tim Claudeholic</h1>
+      <p style="color:var(--text-muted);font-size:1.02rem;margin-top:.5rem">Punya pertanyaan, rekomendasi stan baru, atau masukan untuk proyek DDP1 ini?</p>
+    </div>
+    <div class="contact-layout">
+      <div>
+        <div style="background:white;border:1.5px solid var(--border);border-radius:var(--r-xl);padding:2.1rem;box-shadow:var(--shadow-sm);height:100%">
+          <div style="display:flex;align-items:center;gap:1.1rem;margin-bottom:1.9rem;padding-bottom:1.4rem;border-bottom:1px solid var(--border)">
+            <div style="width:62px;height:62px;border-radius:var(--r-full);background:linear-gradient(135deg,var(--blue-dark),var(--blue));color:white;display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:900;box-shadow:0 6px 16px rgba(29,78,216,.3)">C</div>
+            <div>
+              <div style="display:flex;align-items:center;gap:.45rem">
+                <h3 style="font-size:1.35rem;font-weight:850;color:var(--text)">Claudeholic</h3>
+                <span class="badge badge-blue">Team</span>
+              </div>
+              <p style="font-size:.87rem;color:var(--blue);font-weight:750">Lead: Ghalindra</p>
+              <p style="font-size:.8rem;color:var(--text-muted)">Sistem Informasi &mdash; Fasilkom UI</p>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:1.25rem">
+            <div style="display:flex;align-items:flex-start;gap:.9rem">
+              <div style="width:40px;height:40px;border-radius:var(--r-sm);background:var(--blue-subtle);color:var(--blue);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i data-lucide="mail"></i></div>
+              <div><div style="font-size:.74rem;font-weight:800;color:var(--text-muted);text-transform:uppercase">Email</div><div style="font-weight:650;color:var(--text);font-size:.93rem">claudeholic@ui.ac.id / ghalindra@ui.ac.id</div></div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:.9rem">
+              <div style="width:40px;height:40px;border-radius:var(--r-sm);background:var(--blue-subtle);color:var(--blue);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i data-lucide="map-pin"></i></div>
+              <div><div style="font-size:.74rem;font-weight:800;color:var(--text-muted);text-transform:uppercase">Lokasi</div><div style="font-weight:650;color:var(--text);font-size:.93rem">Fasilkom UI, Kampus Depok 16424</div></div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:.9rem">
+              <div style="width:40px;height:40px;border-radius:var(--r-sm);background:var(--blue-subtle);color:var(--blue);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i data-lucide="book-open"></i></div>
+              <div><div style="font-size:.74rem;font-weight:800;color:var(--text-muted);text-transform:uppercase">Mata Kuliah</div><div style="font-weight:650;color:var(--text);font-size:.93rem">Dasar-Dasar Pemrograman 1 (DDP1)</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="background:white;border:1.5px solid var(--border);border-radius:var(--r-xl);padding:2.1rem;box-shadow:var(--shadow-sm)">
+          <h3 style="font-size:1.35rem;font-weight:850;color:var(--text);margin-bottom:.45rem">Kirim Pesan</h3>
+          <p style="color:var(--text-muted);font-size:.88rem;margin-bottom:1.6rem">Ada stan yang belum terdaftar atau ide fitur baru?</p>
+          <form method="POST" action="{% url 'kantin:contact' %}">
+            {% csrf_token %}
+            <div class="form-group">
+              <label class="form-label" for="senderName"><i data-lucide="user"></i> Nama Lengkap</label>
+              <input type="text" id="senderName" name="name" class="form-input" placeholder="Nama Anda..." required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="senderEmail"><i data-lucide="mail"></i> Alamat Email</label>
+              <input type="email" id="senderEmail" name="email" class="form-input" placeholder="nama@ui.ac.id" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="senderMessage"><i data-lucide="message-square"></i> Pesan</label>
+              <textarea id="senderMessage" name="message" class="form-textarea" rows="4" placeholder="Tuliskan pesan atau rekomendasi..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-blue btn-block" style="padding:.92rem"><i data-lucide="send"></i> Kirim Pesan</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

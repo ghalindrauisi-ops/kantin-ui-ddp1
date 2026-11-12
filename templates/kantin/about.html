@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Tentang Kami | Kantin 14 Fakultas UI{% endblock %}
+{% block content %}
+<section style="padding:2.5rem 0 4rem">
+  <div class="container">
+    <div style="text-align:center;max-width:760px;margin:0 auto 3rem">
+      <span class="badge badge-blue" style="margin-bottom:.75rem">Profil & Filosofi Kuliner UI</span>
+      <h1 style="font-size:2.4rem;font-weight:850;color:var(--text);margin-top:.5rem">Tentang Kantin 14 Fakultas UI</h1>
+      <p style="color:var(--text-muted);font-size:1.05rem;margin-top:.6rem;line-height:1.65">Portal digital terpadu untuk menjelajahi kuliner, denah interaktif, dan stan di seluruh 14 Fakultas Universitas Indonesia.</p>
+    </div>
+    <div class="info-cards-grid">
+      <div class="info-box">
+        <div class="info-box-icon"><i data-lucide="lightbulb"></i></div>
+        <h3>Latar Belakang & Tim Claudeholic</h3>
+        <p>Universitas Indonesia memiliki kampus yang sangat luas dengan <strong>14 fakultas</strong> terbagi dalam 3 rumpun (Saintek, Soshum, IKES). Setiap fakultas memiliki kantin khas masing-masing.</p>
+        <p style="margin-top:.7rem">Website ini dibangun oleh <strong>Tim Claudeholic</strong> (Ghalindra &mdash; Sistem Informasi UI) sebagai proyek <strong>DDP1</strong> untuk menghubungkan seluruh kantin 14 fakultas dalam satu platform.</p>
+      </div>
+      <div class="info-box">
+        <div class="info-box-icon"><i data-lucide="target"></i></div>
+        <h3>Tujuan Pembuatan</h3>
+        <ul>
+          <li>Mendokumentasikan seluruh stan dan menu di 14 Fakultas UI.</li>
+          <li>Menyediakan denah interaktif agar mudah menemukan lokasi kantin.</li>
+          <li>Filter pencarian lintas fakultas dan transparansi harga.</li>
+          <li>Food Randomizer berbasis Python untuk memilih santap siang.</li>
+        </ul>
+      </div>
+      <div class="info-box">
+        <div class="info-box-icon"><i data-lucide="landmark"></i></div>
+        <h3>Kantin Ikonik di UI</h3>
+        <ul>
+          <li><strong>DALLAS (FMIPA):</strong> Di Bawah Lindungan Allah SWT &mdash; posisinya di bawah musala FMIPA.</li>
+          <li><strong>BALSEM (FISIP):</strong> Balik Semak &mdash; kini direnovasi menjadi Taman Korea.</li>
+          <li><strong>KANSAS (FIB):</strong> Kantin Sastra &mdash; arsitektur kerucut dengan piano terbuka.</li>
+          <li><strong>Kantin Fasilkom:</strong> Pusat kumpul anak koding dengan kopi dan menu hemat.</li>
+        </ul>
+      </div>
+    </div>
+    <div style="background:white;border:1px solid var(--border);border-radius:var(--r-lg);padding:2.4rem;box-shadow:var(--shadow-sm);margin-bottom:3rem">
+      <h3 style="font-size:1.45rem;font-weight:800;color:var(--text);margin-bottom:1.4rem">14 Fakultas Universitas Indonesia</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1.4rem">
+        <div style="background:var(--blue-subtle);border:1px solid var(--blue-border);border-radius:var(--r-md);padding:1.4rem">
+          <div class="badge badge-blue" style="margin-bottom:.7rem">Saintek</div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:.5rem;font-size:.88rem">
+            <li><strong>Fasilkom</strong> &mdash; Ilmu Komputer</li>
+            <li><strong>FT</strong> &mdash; Teknik</li>
+            <li><strong>FMIPA</strong> &mdash; Matematika dan IPA</li>
+          </ul>
+        </div>
+        <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:var(--r-md);padding:1.4rem">
+          <div class="badge badge-red" style="margin-bottom:.7rem">Soshum</div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:.5rem;font-size:.88rem">
+            <li><strong>FISIP</strong>, <strong>FIB</strong>, <strong>FEB</strong></li>
+            <li><strong>FH</strong>, <strong>FPsi</strong>, <strong>FIA</strong></li>
+          </ul>
+        </div>
+        <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:var(--r-md);padding:1.4rem">
+          <div class="badge" style="background:#16a34a;color:white;margin-bottom:.7rem">IKES</div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:.5rem;font-size:.88rem">
+            <li><strong>FK</strong>, <strong>FKG</strong>, <strong>FKM</strong></li>
+            <li><strong>FIK</strong>, <strong>FF</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div style="background:white;border:1px solid var(--border);border-radius:var(--r-lg);padding:2.4rem;box-shadow:var(--shadow-sm)">
+      <h3 style="font-size:1.45rem;font-weight:800;color:var(--text);margin-bottom:1rem">Arsitektur & Teknologi</h3>
+      <p style="color:var(--text-muted);margin-bottom:1.4rem;font-size:.93rem;line-height:1.6">Dibangun dengan <strong>MVT Django</strong>: <code>Faculty &rarr; Booth &rarr; Menu</code></p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1rem">
+        <div style="background:var(--bg-muted);padding:1.2rem;border-radius:var(--r-md)"><div style="font-weight:800;color:var(--blue);margin-bottom:.3rem">Backend</div><div style="font-size:.88rem;color:var(--text-muted)">Python & Django ORM</div></div>
+        <div style="background:var(--bg-muted);padding:1.2rem;border-radius:var(--r-md)"><div style="font-weight:800;color:var(--blue);margin-bottom:.3rem">Database</div><div style="font-size:.88rem;color:var(--text-muted)">SQLite3 (Faculty, Booth, Menu)</div></div>
+        <div style="background:var(--bg-muted);padding:1.2rem;border-radius:var(--r-md)"><div style="font-weight:800;color:var(--blue);margin-bottom:.3rem">Frontend</div><div style="font-size:.88rem;color:var(--text-muted)">HTML5, CSS3 responsif, Vanilla JS</div></div>
+        <div style="background:var(--bg-muted);padding:1.2rem;border-radius:var(--r-md)"><div style="font-weight:800;color:var(--blue);margin-bottom:.3rem">Icons</div><div style="font-size:.88rem;color:var(--text-muted)">Lucide Icons (CDN)</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

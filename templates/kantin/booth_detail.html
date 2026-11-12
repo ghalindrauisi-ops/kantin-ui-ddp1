@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{ booth.name }} | Kantin UI{% endblock %}
+{% block content %}
+<section style="padding:2.5rem 0 4rem">
+  <div class="container">
+    <a href="{% url 'kantin:menu_list' %}" class="page-back"><i data-lucide="arrow-left"></i> Kembali ke Daftar Stan</a>
+    <div style="background:white;border:1px solid var(--border);border-radius:var(--r-lg);padding:2rem;box-shadow:var(--shadow-sm);margin:1.5rem 0 2.5rem">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1.5rem">
+        <div>
+          <div style="display:flex;align-items:center;gap:.7rem;margin-bottom:.5rem;flex-wrap:wrap">
+            {% if booth.faculty %}<span class="badge badge-blue">{{ booth.faculty.short_name }} &mdash; {{ booth.faculty.canteen_name }}</span>{% endif %}
+            <span class="map-code" style="padding:.25rem .7rem;font-size:.82rem">{{ booth.map_code }}</span>
+            <span style="font-size:.82rem;color:var(--text-muted)">{{ booth.location }}</span>
+          </div>
+          <h1 style="font-size:2rem;font-weight:850;color:var(--text);margin-bottom:.7rem">{{ booth.name }}</h1>
+          <p style="color:var(--text-muted);font-size:.97rem;max-width:720px;line-height:1.6">{{ booth.description }}</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:.5rem;min-width:195px">
+          <a href="{% url 'kantin:randomizer' %}?mode=specific_booth&booth_id={{ booth.id }}" class="btn btn-red" style="font-size:.88rem"><i data-lucide="shuffle"></i> Acak Menu Booth Ini</a>
+          <a href="{% url 'kantin:mapping' %}{% if booth.faculty %}?faculty={{ booth.faculty.short_name }}{% endif %}" class="btn btn-ghost" style="font-size:.88rem"><i data-lucide="map"></i> Cek di Denah</a>
+        </div>
+      </div>
+    </div>
+    {% if makanan_list %}
+    <div style="margin-bottom:3rem">
+      <div style="display:flex;align-items:center;gap:.7rem;margin-bottom:1.2rem">
+        <h2 style="font-size:1.45rem;font-weight:800;color:var(--text)">Menu Makanan</h2>
+        <span class="badge badge-blue">{{ makanan_list.count }} Menu</span>
+      </div>
+      <div class="menu-grid">
+        {% for item in makanan_list %}
+        <div class="menu-card">
+          <div class="menu-thumb"><i data-lucide="utensils"></i></div>
+          <div class="menu-details">
+            <span class="menu-tag">Makanan</span>
+            <div class="menu-name">{{ item.name }}</div>
+            {% if item.description %}<div class="menu-desc">{{ item.description }}</div>{% endif %}
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:.38rem">
+              <span class="menu-price">{{ item.formatted_price }}</span>
+              <span class="avail-badge {% if item.is_available %}avail-yes{% else %}avail-no{% endif %}">{% if item.is_available %}Tersedia{% else %}Habis{% endif %}</span>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+    {% if minuman_list %}
+    <div style="margin-bottom:3rem">
+      <div style="display:flex;align-items:center;gap:.7rem;margin-bottom:1.2rem">
+        <h2 style="font-size:1.45rem;font-weight:800;color:var(--text)">Menu Minuman</h2>
+        <span class="badge badge-blue">{{ minuman_list.count }} Menu</span>
+      </div>
+      <div class="menu-grid">
+        {% for item in minuman_list %}
+        <div class="menu-card">
+          <div class="menu-thumb"><i data-lucide="cup-soda"></i></div>
+          <div class="menu-details">
+            <span class="menu-tag" style="color:var(--red)">Minuman</span>
+            <div class="menu-name">{{ item.name }}</div>
+            {% if item.description %}<div class="menu-desc">{{ item.description }}</div>{% endif %}
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:.38rem">
+              <span class="menu-price">{{ item.formatted_price }}</span>
+              <span class="avail-badge {% if item.is_available %}avail-yes{% else %}avail-no{% endif %}">{% if item.is_available %}Tersedia{% else %}Habis{% endif %}</span>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+    {% if snack_list %}
+    <div style="margin-bottom:2rem">
+      <div style="display:flex;align-items:center;gap:.7rem;margin-bottom:1.2rem">
+        <h2 style="font-size:1.45rem;font-weight:800;color:var(--text)">Snack &amp; Camilan</h2>
+      </div>
+      <div class="menu-grid">
+        {% for item in snack_list %}
+        <div class="menu-card">
+          <div class="menu-thumb"><i data-lucide="cookie"></i></div>
+          <div class="menu-details">
+            <span class="menu-tag" style="color:#d97706">Snack</span>
+            <div class="menu-name">{{ item.name }}</div>
+            {% if item.description %}<div class="menu-desc">{{ item.description }}</div>{% endif %}
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:.38rem">
+              <span class="menu-price">{{ item.formatted_price }}</span>
+              <span class="avail-badge avail-yes">Tersedia</span>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

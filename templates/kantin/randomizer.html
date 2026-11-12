@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Makan Apa Hari Ini? | Randomizer Kantin UI{% endblock %}
+{% block content %}
+<section style="padding:2.5rem 0 4.5rem">
+  <div class="container">
+    <div class="slogan-hero">
+      <span class="badge badge-red" style="margin-bottom:.85rem">Food Randomizer by Claudeholic</span>
+      <h1 class="slogan-title">Makan apa <span class="hl">hari ini?</span></h1>
+      <p class="slogan-sub">Biarkan generator pintar Claudeholic mengacak pilihan makanan lezat dari 14 Fakultas UI yang pas di lidah dan ramah di kantong.</p>
+    </div>
+    <div class="randomizer-card">
+      <div class="tabs-nav" role="tablist">
+        <button type="button" class="tab-btn {% if mode == 'makanan' or not mode %}active{% endif %}" data-mode="makanan"><i data-lucide="utensils"></i> Acak Makanan</button>
+        <button type="button" class="tab-btn {% if mode == 'minuman' %}active{% endif %}" data-mode="minuman"><i data-lucide="cup-soda"></i> Acak Minuman</button>
+        <button type="button" class="tab-btn {% if mode == 'combo' %}active{% endif %}" data-mode="combo"><i data-lucide="package"></i> Paket Kombo</button>
+      </div>
+      <form id="randomizerForm" method="GET" action="{% url 'kantin:randomizer' %}">
+        <input type="hidden" name="mode" id="randomizerModeInput" value="{{ mode|default:'makanan' }}">
+        <div class="form-group" id="facultyFilterGroup">
+          <label class="form-label" for="facultySelect"><i data-lucide="landmark"></i> Pilih Fakultas (Opsional)</label>
+          <select name="faculty_id" id="facultySelect" class="form-select">
+            <option value="">-- Semua 14 Fakultas UI --</option>
+            {% for f in all_faculties %}
+            <option value="{{ f.id }}" {% if selected_faculty_id|stringformat:'s' == f.id|stringformat:'s' %}selected{% endif %}>{{ f.short_name }} - {{ f.canteen_name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group" id="budgetFilterGroup" style="{% if mode == 'combo' %}display:none{% endif %}">
+          <label class="form-label" for="maxPriceInput"><i data-lucide="wallet"></i> Budget Maksimal (Opsional)</label>
+          <input type="number" name="max_price" id="maxPriceInput" value="{{ max_price }}" class="form-input" placeholder="Contoh: 15000" min="1000" step="1000">
+        </div>
+        <button type="submit" id="randomizeBtn" class="btn btn-red btn-block" style="padding:1.1rem;font-size:1.1rem"><i data-lucide="shuffle"></i> Acak Sekarang!</button>
+      </form>
+      {% if error_message %}<div class="alert alert-error" style="margin-top:1.4rem"><i data-lucide="alert-circle"></i>{{ error_message }}</div>{% endif %}
+      <div id="randomizerResultContainer">
+        {% if result %}
+        <div class="result-box">
+          {% if result_type == 'combo' %}
+          <div style="text-align:center;margin-bottom:1.1rem"><span class="badge badge-solid">Paket Kombo Terpilih</span></div>
+          <div class="combo-grid">
+            <div class="combo-food"><span class="combo-label combo-label-food">Makanan</span><div class="combo-name">{{ result.food.name }}</div><div class="combo-price-food">{{ result.food.formatted_price }}</div><div class="combo-meta">{{ result.food.booth_name }} &bull; {{ result.food.faculty_short }}</div><a href="{% url 'kantin:booth_detail' result.food.booth_id %}" class="btn btn-ghost btn-block" style="margin-top:.7rem;font-size:.82rem">Lihat Booth</a></div>
+            <div class="combo-drink"><span class="combo-label combo-label-drink">Minuman</span><div class="combo-name">{{ result.drink.name }}</div><div class="combo-price-drink">{{ result.drink.formatted_price }}</div><div class="combo-meta">{{ result.drink.booth_name }} &bull; {{ result.drink.faculty_short }}</div><a href="{% url 'kantin:booth_detail' result.drink.booth_id %}" class="btn btn-ghost btn-block" style="margin-top:.7rem;font-size:.82rem">Lihat Booth</a></div>
+          </div>
+          <div class="combo-total"><div style="font-size:.82rem;color:#92400e;font-weight:600">Total Harga Kombo</div><div style="font-size:1.7rem;font-weight:900;color:#b45309">{{ result.formatted_total_price }}</div><div style="font-size:.77rem;color:#92400e">{{ result.food.formatted_price }} + {{ result.drink.formatted_price }}</div></div>
+          <div style="text-align:center"><a href="{% url 'kantin:randomizer' %}?mode=combo&faculty_id={{ selected_faculty_id }}" class="btn btn-red"><i data-lucide="shuffle"></i> Acak Lagi</a></div>
+          {% elif result_type == 'menu' %}
+          <span class="badge badge-blue" style="margin-bottom:.75rem">Menu Terpilih</span>
+          <h3 class="result-title">{{ result.name }}</h3>
+          <div class="result-meta"><span class="result-price">{{ result.formatted_price }}</span><span class="badge badge-blue">{{ result.faculty_short }} &mdash; {{ result.canteen_name }}</span><span style="font-size:.88rem;color:var(--text-muted)">Stan: <strong>{{ result.booth_name }}</strong></span></div>
+          <p class="result-desc">{{ result.description }}</p>
+          <div style="display:flex;gap:.9rem;flex-wrap:wrap"><a href="{% url 'kantin:booth_detail' result.booth_id %}" class="btn btn-blue"><i data-lucide="store"></i> Kunjungi Booth</a><a href="{% url 'kantin:randomizer' %}?mode={{ mode }}&faculty_id={{ selected_faculty_id }}&max_price={{ max_price }}" class="btn btn-ghost"><i data-lucide="shuffle"></i> Acak Ulang</a></div>
+          {% endif %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    <div style="max-width:740px;margin:0 auto;background:white;border:1px solid var(--border);border-radius:var(--r-lg);padding:1.6rem;box-shadow:var(--shadow-xs)">
+      <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.45rem"><span class="badge badge-blue">Claudeholic</span><h4 style="font-weight:800;color:var(--blue);font-size:.97rem">Catatan Algoritma Randomizer</h4></div>
+      <p style="font-size:.87rem;color:var(--text-muted);line-height:1.6">Fitur ini menggunakan modul Python <code>random.choice()</code> dengan data langsung dari database SQLite. Mode Paket Kombo mengacak 1 makanan + 1 minuman sekaligus dengan 60% peluang memilih minuman dari stan yang sama. Filter budget menggunakan query <code>price__lte</code>.</p>
+    </div>
+  </div>
+</section>
+{% endblock %}
