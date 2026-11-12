@@ -23,7 +23,7 @@ from kantin.models import Faculty, Booth, Menu
 
 def penjelasan_konsep_ddp():
     print("=" * 70)
-    print("🎓 SIMULASI KONSEP DDP1 — PORTAL KANTIN 14 FAKULTAS UNIVERSITAS INDONESIA")
+    print("SIMULASI KONSEP DDP1 - PORTAL KANTIN 14 FAKULTAS UNIVERSITAS INDONESIA")
     print("=" * 70)
 
     # ---------------------------------------------------------
@@ -33,7 +33,7 @@ def penjelasan_konsep_ddp():
     faculties = list(Faculty.objects.all())
     print(f"Total Fakultas Terdaftar: {len(faculties)} Fakultas")
     for f in faculties:
-        print(f"  • {f.short_name:<8} ({f.cluster:<7}) : {f.canteen_name:<30} | {f.total_booth()} Stan")
+        print(f"  * {f.short_name:<8} ({f.cluster:<7}) : {f.canteen_name:<30} | {f.total_booth()} Stan")
 
     # ---------------------------------------------------------
     # KONSEP 2: Perulangan (Loops) dan Manipulasi String
@@ -54,11 +54,11 @@ def penjelasan_konsep_ddp():
         menu_terpilih = random.choice(semua_menu)
         fac_name = menu_terpilih.booth.faculty.name if menu_terpilih.booth.faculty else "UI"
         canteen = menu_terpilih.booth.faculty.canteen_name if menu_terpilih.booth.faculty else "Kantin"
-        print(f"  🎉 Menu Acak Hari Ini : {menu_terpilih.name}")
-        print(f"  🏛️ Fakultas           : {fac_name} ({canteen})")
-        print(f"  🏪 Asal Stan          : {menu_terpilih.booth.name}")
-        print(f"  💰 Harga              : {menu_terpilih.formatted_price()}")
-        print(f"  🏷️ Kategori           : {menu_terpilih.get_category_display()}")
+        print(f"  [Hasil] Menu Acak Hari Ini : {menu_terpilih.name}")
+        print(f"  [Info]  Fakultas           : {fac_name} ({canteen})")
+        print(f"  [Info]  Asal Stan          : {menu_terpilih.booth.name}")
+        print(f"  [Info]  Harga              : {menu_terpilih.formatted_price()}")
+        print(f"  [Info]  Kategori           : {menu_terpilih.get_category_display()}")
 
     # ---------------------------------------------------------
     # KONSEP 4: Percabangan Logika & Filter Budget Mahasiswa (Conditionals)
@@ -69,10 +69,10 @@ def penjelasan_konsep_ddp():
     print(f"  Ditemukan {len(menu_hemat)} menu se-UI yang cocok dengan budget Rp {budget:,}:")
     for item in menu_hemat[:5]:
         fac = item.booth.faculty.short_name if item.booth.faculty else "UI"
-        print(f"   • [{fac}] {item.name} ({item.formatted_price()}) - {item.booth.name}")
+        print(f"   * [{fac}] {item.name} ({item.formatted_price()}) - {item.booth.name}")
 
     print("\n" + "=" * 70)
-    print("✅ PEMAHAMAN SELESAI: Anda siap mempresentasikan proyek DDP1 ini!")
+    print("[OK] PEMAHAMAN SELESAI: Anda siap mempresentasikan proyek DDP1 ini!")
     print("=" * 70)
 
 if __name__ == '__main__':
